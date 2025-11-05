@@ -128,7 +128,7 @@ results_boone <- boone(
 )
 print(results_boone)
 ```
-## 📊 Features
+## Features
 
 ✔️ Handles both cross-sectional and time-series datasets
 
@@ -142,7 +142,7 @@ print(results_boone)
 
 ---
 
-##  🧑‍💻 Authors & Acknowledgments
+## Authors & Acknowledgments
 
 - **Donalson Wilson**, PhD Candidate in Data Science & AI
 

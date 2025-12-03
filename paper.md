@@ -25,14 +25,14 @@ and will also be released on CRAN (as MarketCompetitionMetrics.R), and PyPI (as 
 # Statement of need
 
 The In today’s digitalized economy, firms must continuously analyze the markets in which they operate in order to adapt strategies and make informed decisions. The regulators of the markets also require reliable tools to assess market structure and ensure proper regulation. Market competition can vary significantly, ranging from monopolistic and duopolistic settings to highly competitive environments.
-Several economic indicators have been developed to measure the degree of competition within a market. Among the most widely used are the Herfindahl–Hirschman Index (HHI), introduced by Herfindahl and Hirschman (1945-1950)(Herfindahl, 1950; Hirschman, 2018) the Lerner index (Lerner, 1934), the Boone indicator (Boone, 2008; Boone et al., 2007) and the Panzar–Rosse H-statistic (Panzar & Rosse, 1987; Rosse & Panzar, 1977). These metrics have been applied across different industries to evaluate competitive intensity. For instance, Abel and Marire (Abel & Marire, 2021) employed the Boone Indicator to measure competitiveness in Zimbabwe’s insurance sector between 2010 and 2017; Mpho and Witness (Mpho & Witness, 2020) used both Boone and Panzar–Rosse indices to assess competition in South Africa’s banking industry; and Benazzi et al. (BENAZZI & ROUIESSI, 2017) analyzed the Moroccan banking sector using the Boone Indicator. Similarly, the HHI has frequently been used to evaluate market concentration, such as in Johan and Vania (Johan & Vania, 2022), who investigated the concentration level of the financial technology industry.
+Several economic indicators have been developed to measure the degree of competition within a market. Among the most widely used are the Herfindahl–Hirschman Index (HHI), introduced by Herfindahl and Hirschman (1945-1950) (@Herfindahl1950; @Hirschman2018) the Lerner index (@Lerner1934), the Boone indicator (@Boone2008; @BooneVanOursWiel2007) and the Panzar–Rosse H-statistic (@PanzarRosse1987; @RossePanzar1977). These metrics have been applied across different industries to evaluate competitive intensity. For instance, Abel and Marire (@AbelMarire2021) employed the Boone Indicator to measure competitiveness in Zimbabwe’s insurance sector between 2010 and 2017; Mpho and Witness (@MphoWitness2020) used both Boone and Panzar–Rosse indices to assess competition in South Africa’s banking industry; and Benazzi et al. (@BenazziRouiesi2017) analyzed the Moroccan banking sector using the Boone Indicator. Similarly, the HHI has frequently been used to evaluate market concentration, such as in Johan and Vania (@JohanVania2022), who investigated the concentration level of the financial technology industry.
 Despite their extensive use in academic and policy research, these metrics are often computed using ad hoc scripts, combinations of statistical software, or partial code shared on platforms such as GitHub. This reflects a lack of standardized, accessible implementations in mainstream programming environments.
 The objective of this article is to address this gap by introducing an open-source framework in both Python and R that implements the four principal competition measures: HHI, Lerner Index, Boone Indicator, and Panzar–Rosse statistic, within a unified package. This dual implementation is designed to support researchers, practitioners, and students in conducting robust and reproducible analyses of market competition.
 
 # Related Work
 
-The Herfindahl–Hirschman Index (HHI) is one of the few competition measures sometimes available in standard econometric software, for instance through the hhi command in Stata or the IC2 package in R. An additional contribution in this space is the work of Philip D. Waggoner, who developed an R package computing the HHI index with integrated visualization via ggplot (D. Waggoner, 2018). By contrast, other widely used indicators of competition are not natively supported in mainstream tools.
-The Lerner Index is typically computed manually from price and marginal cost estimations, often relying on custom regressions in Stata, R, or Python. The Boone Indicator is even less standardized, most often estimated through ad hoc log-log OLS regressions, with implementation scattered across isolated R scripts or Stata modules. Similarly, the Panzar–Rosse H-statistic, though extensively applied in banking competition studies (e.g., (Abel & Le Roux, 2017; BENAZZI & ROUIESSI, 2017; Molyneux et al., 1994; Shaffer & Spierdijk, 2015)), is usually calculated using researcher-specific scripts rather than through an official package.
+The Herfindahl–Hirschman Index (HHI) is one of the few competition measures sometimes available in standard econometric software, for instance through the hhi command in Stata or the IC2 package in R. An additional contribution in this space is the work of Philip D. Waggoner, who developed an R package computing the HHI index with integrated visualization via ggplot (@Waggoner2018). By contrast, other widely used indicators of competition are not natively supported in mainstream tools.
+The Lerner Index is typically computed manually from price and marginal cost estimations, often relying on custom regressions in Stata, R, or Python. The Boone Indicator is even less standardized, most often estimated through ad hoc log-log OLS regressions, with implementation scattered across isolated R scripts or Stata modules. Similarly, the Panzar–Rosse H-statistic, though extensively applied in banking competition studies (e.g., (@AbelLeRoux2017; @BenazziRouiesi2017; @Molyneux1994; @ShafferSpierdijk2015)), is usually calculated using researcher-specific scripts rather than through an official package.
 As a result, HHI is the only measure readily accessible in mainstream software, while the Lerner, Boone, and Panzar–Rosse indicators remain fragmented across custom, non-standard implementations. The contribution of this work is therefore to provide the first unified open-source Python and R packages that centralize all four indicators, delivering a consistent, ready-to-use framework for researchers and practitioners conducting market competition analysis.
 
 
@@ -40,7 +40,7 @@ As a result, HHI is the only measure readily accessible in mainstream software, 
 
 ## Herfindahl–Hirschman Index (HHI)
 
-The Herfindahl–Hirschman Index (HHI) is primarily used to measure market concentration. Originally introduced in the late 1940s and 1950s by Herfindahl and Hirschman (Herfindahl, 1950; Hirschman, 2018), the HHI has become a key indicator in the study of market competition. It provides valuable insight into the degree of concentration and helps determine whether a firm operates in a perfectly competitive or imperfectly competitive environment. The index is parameterized by the number of firms operating in the market and is calculated as the sum of the squared market shares of all firms:
+The Herfindahl–Hirschman Index (HHI) is primarily used to measure market concentration. Originally introduced in the late 1940s and 1950s by Herfindahl and Hirschman (@Herfindahl1950; @Hirschman2018), the HHI has become a key indicator in the study of market competition. It provides valuable insight into the degree of concentration and helps determine whether a firm operates in a perfectly competitive or imperfectly competitive environment. The index is parameterized by the number of firms operating in the market and is calculated as the sum of the squared market shares of all firms:
 
 $$HHI_t = \sum_{i=1}^{n} S_{i,t}^2$$
 
@@ -48,7 +48,7 @@ Its value ranges between 0 (highly competitive market) and 10 000 (monopoly).
 
 ## Lerner Index
 
-Developed by economist Abba P. Lerner in 1934 (Lerner, 1934), the Lerner Index is used to quantify the market power of a firm i. This index measures a firm’s ability to set prices above marginal costs, thereby indicating the degree of market power it holds. The higher the index, the greater the firm’s dominance in the market. For a given firm i, the Lerner Index at time t is defined as:
+Developed by economist Abba P. Lerner in 1934 (@Lerner1934), the Lerner Index is used to quantify the market power of a firm i. This index measures a firm’s ability to set prices above marginal costs, thereby indicating the degree of market power it holds. The higher the index, the greater the firm’s dominance in the market. For a given firm i, the Lerner Index at time t is defined as:
 
 $$L_{i,t} = \frac{P_{i,t} - MC_{i,t}}{P_{i,t}}$$
 
@@ -56,7 +56,7 @@ The market-wide index is computed as a market-share–weighted average.
 
 ## Panzar–Rosse H-statistic
 
-The Panzar–Rosse model, introduced in 1977 (Panzar & Rosse, 1987; Rosse & Panzar, 1977), is widely known through the H-statistic, which captures the static dimension of competition. The core idea is that firms adjust their pricing strategies in response to changes in input prices, depending on the behavior of their competitors. The H-statistic measures the degree of competition by quantifying how revenues react to variations in input prices. Formally, for firm i in period t, the model is estimated using the following log–log specification:
+The Panzar–Rosse model, introduced in 1977 (@PanzarRosse1987; @RossePanzar1977), is widely known through the H-statistic, which captures the static dimension of competition. The core idea is that firms adjust their pricing strategies in response to changes in input prices, depending on the behavior of their competitors. The H-statistic measures the degree of competition by quantifying how revenues react to variations in input prices. Formally, for firm i in period t, the model is estimated using the following log–log specification:
 
 
 $$\ln R_{i,t} = \alpha + \sum_k \alpha_{k,t} \ln C_{k,i,t}$$
@@ -72,7 +72,7 @@ Its interpretation follows established competition theory:
 
 ## Boone Indicator
 
-Unlike the Panzar–Rosse model, which captures the static dimension of competition, the Boone Indicator (Boone, 2000, 2001, 2004, 2008; Boone et al., 2007) focuses on its dynamic aspect. It is based on the principle that more efficient firms (those with lower costs) achieve higher profitability in competitive markets. Boone’s approach measures the elasticity of profits with respect to marginal costs, formalized in the following log–log model:
+Unlike the Panzar–Rosse model, which captures the static dimension of competition, the Boone Indicator (@Boone2000; @Boone2001; @Boone2004; @Boone2008; @BooneVanOursWiel2007) focuses on its dynamic aspect. It is based on the principle that more efficient firms (those with lower costs) achieve higher profitability in competitive markets. Boone’s approach measures the elasticity of profits with respect to marginal costs, formalized in the following log–log model:
 
 $$\ln \pi_{i,t} = \lambda + \sum_k \beta_{k,t} \ln C_{k,i,t}$$
 
@@ -100,5 +100,6 @@ This work was supported by the Moroccan Ministry of Higher Education, Scientific
 # Conflicts of interest
 
 The authors declare that there are no conflicts of interest associated with this manuscript.
+
 
 

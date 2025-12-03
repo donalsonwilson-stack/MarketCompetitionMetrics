@@ -52,7 +52,7 @@ import pandas as pd
 from market_competition_metrics import MarketCompetitionMetrics
 
 # Load dataset
-df = pd.read_excel("Synthetic_Market_Data.xlsx")
+df = pd.read_csv("Synthetic_Market_Data.csv")
 
 # Compute HHI per period
 results_hhi = MarketCompetitionMetrics.hhi(
@@ -96,7 +96,7 @@ for period, res in results.items():
 library(MarketCompetitionMetrics)
 
 # Load dataset
-data <- read.excel("Synthetic_Market_Data.xlsx")
+data <- read.csv("Synthetic_Market_Data.csv")
 
 # Compute HHI per period
 results_hhi <- hhi(data, share_col="Market_share", period_col="Period", plot=TRUE)

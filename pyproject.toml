@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "market_competition_metrics"
+version = "0.1.0"
+description = "A dual Python & R framework for measuring market competition (HHI, Lerner, Boone, Panzar-Rosse)."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+  {name = "Donalson Wilson", email = "donalson.wilson@etu.uae.ac.ma"},
+  {name = "Abdellah Azmani"}
+]
+requires-python = ">=3.8"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "statsmodels>=0.13",
+  "matplotlib>=3.0"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/donalsonwilson-stack/MarketCompetitionMetrics"
+"Repository" = "https://github.com/donalsonwilson-stack/MarketCompetitionMetrics"
+
+[tool.setuptools.packages.find]
+where = ["."]

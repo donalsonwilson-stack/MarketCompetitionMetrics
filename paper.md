@@ -67,7 +67,7 @@ $$H_t = \sum_k \alpha_{k,t}$$
 Its interpretation follows established competition theory:  
 - \(H = 1\): perfect competition  
 - \(0 < H < 1\): monopolistic competition  
-- \(H \le 0\): monopoly or collusive behavior
+- \(H < 0\): monopoly or collusive behavior
 
 ## Boone Indicator
 

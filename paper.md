@@ -101,6 +101,91 @@ In addition to this unified workflow, the Python implementation relies on a set 
 
 Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr package enables streamlined data manipulation and grouping operations, ggplot2 provides graphical visualization of the indices over time, and broom is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
 
+# Example
+
+Below we provide a minimal usage example in both Python and R to illustrate how the proposed framework can be used to compute competition indicators with the provided dataset.
+
+## Python example
+
+```python
+import pandas as pd
+from market_competition_metrics import MarketCompetitionMetrics
+
+# Load dataset
+df = pd.read_excel("Synthetic_Market_Data.xlsx")
+
+# Compute HHI per period
+hhi_results = MarketCompetitionMetrics.hhi(
+    df, share_col="Market_share", period_col="Period", plot=True
+)
+
+# Compute Lerner Index
+lerner_results = MarketCompetitionMetrics.lerner(
+    df,
+    firm_col="Firm",
+    price_col="Price",
+    cost_col="Marginal_cost",
+    share_col="Market_share",
+    period_col="Period",
+    plot=True
+)
+
+# Compute Panzar–Rosse H-statistic
+pr_results = MarketCompetitionMetrics.panzar_rosse(
+    df,
+    revenue_col="Revenue",
+    input_cols=["Labor_cost", "Capital_cost"],
+    period_col="Period",
+    plot=True
+)
+
+# Compute Boone Indicator
+boone_results = MarketCompetitionMetrics.boone(
+    df,
+    cost_cols=["Labor_cost", "Capital_cost", "Wage_cost"],
+    profit_col="Profit",
+    period_col="Period",
+    plot=True
+)
+
+## R example
+library(MarketCompetitionMetrics)
+
+# Load dataset
+data <- readxl::read_excel("Synthetic_Market_Data.xlsx")
+
+# Compute HHI per period
+results_hhi <- hhi(data, share_col="Market_share", period_col="Period", plot=TRUE)
+
+# Compute Lerner Index
+results_lerner <- lerner(
+  data,
+  firm_col="Firm",
+  price_col="Price",
+  cost_col="Marginal_cost",
+  share_col="Market_share",
+  period_col="Period",
+  plot=TRUE
+)
+
+# Compute Panzar–Rosse H-statistic
+results_pr <- panzar_rosse(
+  data,
+  revenue_col = "Revenue",
+  input_cols = c("Labor_cost", "Capital_cost"),
+  period_col = "Period",
+  plot = TRUE
+)
+
+# Compute Boone Indicator
+results_boone <- boone(
+  data,
+  cost_cols = c("Labor_cost", "Capital_cost", "Wage_cost"),
+  profit_col = "Profit",
+  period_col = "Period",
+  plot = TRUE
+)
+
 # Acknowledgments
 
 This work was supported by the Moroccan Ministry of Higher Education, Scientific Research and Innovation, the Digital Development Agency (DDA), and the CNRST under the Smart DLSP Project – AL KHAWARIZMI Program.

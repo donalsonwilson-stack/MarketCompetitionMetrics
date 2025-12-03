@@ -91,3 +91,13 @@ The design of the packages supports both cross-sectional and time-series dataset
 In addition to this unified workflow, the Python implementation relies on a set of widely used scientific libraries to ensure numerical stability and statistical rigor. NumPy is used for vectorized computations, pandas for data manipulation and grouping operations, matplotlib for producing time-series visualizations, and statsmodels for estimating the Boone and Panzar–Rosse regressions, including their associated econometric diagnostics.
 
 Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr package enables streamlined data manipulation and grouping operations, ggplot2 provides graphical visualization of the indices over time, and broom is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
+
+# Acknowledgments
+
+This work was supported by the Moroccan Ministry of Higher Education, Scientific Research and Innovation, the Digital Development Agency (DDA), and the CNRST under the Smart DLSP Project – AL KHAWARIZMI Program.
+
+# Conflicts of interest
+
+The authors declare that there are no conflicts of interest associated with this manuscript.
+
+

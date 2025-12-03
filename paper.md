@@ -186,6 +186,7 @@ results_boone <- boone(
   plot = TRUE
 )
 
+```
 # Acknowledgments
 
 This work was supported by the Moroccan Ministry of Higher Education, Scientific Research and Innovation, the Digital Development Agency (DDA), and the CNRST under the Smart DLSP Project – AL KHAWARIZMI Program.

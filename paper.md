@@ -40,7 +40,7 @@ As a result, HHI is the only measure readily accessible in mainstream software, 
 
 ## Herfindahl–Hirschman Index (HHI)
 
-The HHI measures market concentration as the sum of squared market shares:
+The Herfindahl–Hirschman Index (HHI) is primarily used to measure market concentration. Originally introduced in the late 1940s and 1950s by Herfindahl and Hirschman (Herfindahl, 1950; Hirschman, 2018), the HHI has become a key indicator in the study of market competition. It provides valuable insight into the degree of concentration and helps determine whether a firm operates in a perfectly competitive or imperfectly competitive environment. The index is parameterized by the number of firms operating in the market and is calculated as the sum of the squared market shares of all firms:
 
 $$HHI_t = \sum_{i=1}^{n} S_{i,t}^2$$
 
@@ -48,7 +48,7 @@ Its value ranges between 0 (highly competitive market) and 10 000 (monopoly).
 
 ## Lerner Index
 
-The firm-level Lerner index quantifies market power by comparing price to marginal cost:
+Developed by economist Abba P. Lerner in 1934 (Lerner, 1934), the Lerner Index is used to quantify the market power of a firm i. This index measures a firm’s ability to set prices above marginal costs, thereby indicating the degree of market power it holds. The higher the index, the greater the firm’s dominance in the market. For a given firm i, the Lerner Index at time t is defined as:
 
 $$L_{i,t} = \frac{P_{i,t} - MC_{i,t}}{P_{i,t}}$$
 
@@ -56,7 +56,8 @@ The market-wide index is computed as a market-share–weighted average.
 
 ## Panzar–Rosse H-statistic
 
-The Panzar–Rosse model estimates the elasticity of revenues with respect to input prices via a log–log specification:
+The Panzar–Rosse model, introduced in 1977 (Panzar & Rosse, 1987; Rosse & Panzar, 1977), is widely known through the H-statistic, which captures the static dimension of competition. The core idea is that firms adjust their pricing strategies in response to changes in input prices, depending on the behavior of their competitors. The H-statistic measures the degree of competition by quantifying how revenues react to variations in input prices. Formally, for firm i in period t, the model is estimated using the following log–log specification:
+
 
 $$\ln R_{i,t} = \alpha + \sum_k \alpha_{k,t} \ln C_{k,i,t}$$
 
@@ -71,7 +72,7 @@ Its interpretation follows established competition theory:
 
 ## Boone Indicator
 
-The Boone Indicator captures the effect of marginal costs on profitability through a log–log regression:
+Unlike the Panzar–Rosse model, which captures the static dimension of competition, the Boone Indicator (Boone, 2000, 2001, 2004, 2008; Boone et al., 2007) focuses on its dynamic aspect. It is based on the principle that more efficient firms (those with lower costs) achieve higher profitability in competitive markets. Boone’s approach measures the elasticity of profits with respect to marginal costs, formalized in the following log–log model:
 
 $$\ln \pi_{i,t} = \lambda + \sum_k \beta_{k,t} \ln C_{k,i,t}$$
 

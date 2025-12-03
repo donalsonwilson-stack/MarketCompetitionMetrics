@@ -112,7 +112,7 @@ import pandas as pd
 from market_competition_metrics import MarketCompetitionMetrics
 
 # Load dataset
-df = pd.read_excel("Synthetic_Market_Data.xlsx")
+df = pd.read_csv("Synthetic_Market_Data.csv")
 
 # Compute HHI per period
 hhi_results = MarketCompetitionMetrics.hhi(
@@ -152,7 +152,7 @@ boone_results = MarketCompetitionMetrics.boone(
 library(MarketCompetitionMetrics)
 
 # Load dataset
-data <- readxl::read_excel("Synthetic_Market_Data.xlsx")
+data <- read.csv("Synthetic_Market_Data.csv")
 
 # Compute HHI per period
 results_hhi <- hhi(data, share_col="Market_share", period_col="Period", plot=TRUE)

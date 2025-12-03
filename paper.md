@@ -5,7 +5,7 @@ authors:
     orcid: 0009-0002-9430-981X
     affiliation: "1"
   - name: Abdellah Azmani
-  - orcid: 0000-0003-4975-3807
+    orcid: 0000-0003-4975-3807
     affiliation: "1"
 affiliations:
   - name: Abdelmalek Essaadi University, Faculty of Science and Technology of Tangier, Intelligent Automation and BioMed Genomics Laboratory (IABL), Morocco
@@ -19,15 +19,23 @@ bibliography: paper.bib
 The Competitive analysis is a crucial component for firms operating in dynamic markets. Understanding market structure and the intensity of competition enables organizations to adjust strategies and make informed decisions. 
 In this paper, we propose a dual open-source package for both Python and R environments that implements four of the most widely used competition measures in the literature: the Herfindahl–Hirschman Index (HHI), the Lerner Index, 
 the Boone Indicator, and the Panzar–Rosse statistic. These packages provide researchers, practitioners, and students with a ready-to-use framework for conducting competition analysis. They are designed to handle both cross-sectional 
-and time-series datasets and are adaptable to various sectors, including insurance, banking, and other competitive industries. The packages that we have introduced in this study are already available as open-source on GitHub , 
+and time-series datasets and are adaptable to various sectors, including insurance, banking, and other competitive industries. The packages that we have introduced in this study are already available as open-source on GitHub (https://github.com/donalsonwilson-stack/MarketCompetitionMetrics) , 
 and will also be released on CRAN (as MarketCompetitionMetrics.R), and PyPI (as market_competition_metrics). To the best of our knowledge, this work represents the first open-source effort to implement and unify these four competition metrics within both R and Python ecosystems.
 
 # Statement of need
 
-The In today’s digitalized economy, firms must continuously analyze the markets in which they operate in order to adapt strategies and make informed decisions. The regulators of the markets also require reliable tools to assess market structure and ensure proper regulation. Market competition can vary significantly, ranging from monopolistic and duopolistic settings to highly competitive environments.
-Several economic indicators have been developed to measure the degree of competition within a market. Among the most widely used are the Herfindahl–Hirschman Index (HHI), introduced by Herfindahl and Hirschman (1945-1950) (@Herfindahl1950; @Hirschman2018) the Lerner index (@Lerner1934), the Boone indicator (@Boone2008; @BooneVanOursWiel2007) and the Panzar–Rosse H-statistic (@PanzarRosse1987; @RossePanzar1977). These metrics have been applied across different industries to evaluate competitive intensity. For instance, Abel and Marire (@AbelMarire2021) employed the Boone Indicator to measure competitiveness in Zimbabwe’s insurance sector between 2010 and 2017; Mpho and Witness (@MphoWitness2020) used both Boone and Panzar–Rosse indices to assess competition in South Africa’s banking industry; and Benazzi et al. (@BenazziRouiesi2017) analyzed the Moroccan banking sector using the Boone Indicator. Similarly, the HHI has frequently been used to evaluate market concentration, such as in Johan and Vania (@JohanVania2022), who investigated the concentration level of the financial technology industry.
+# Statement of need
+
+In today’s digitalized economy, firms must continuously analyze the markets in which they operate in order to adapt strategies and make informed decisions. The regulators of the markets also require reliable tools to assess market structure and ensure proper regulation. Market competition can vary significantly, ranging from monopolistic and duopolistic settings to highly competitive environments.
+
+Several economic indicators have been developed to measure the degree of competition within a market. Among the most widely used are the Herfindahl–Hirschman Index (HHI), introduced by Herfindahl and Hirschman (1945-1950) (@Herfindahl1950; @Hirschman2018), the Lerner index (@Lerner1934), the Boone indicator (@Boone2008; @BooneVanOursWiel2007) and the Panzar–Rosse H-statistic (@PanzarRosse1987; @RossePanzar1977). These metrics have been applied across different industries to evaluate competitive intensity. For instance, Abel and Marire (@AbelMarire2021) employed the Boone Indicator to measure competitiveness in Zimbabwe’s insurance sector between 2010 and 2017; Mpho and Witness (@MphoWitness2020) used both Boone and Panzar–Rosse indices to assess competition in South Africa’s banking industry; and Benazzi et al. (@BenazziRouiesi2017) analyzed the Moroccan banking sector using the Boone Indicator. Similarly, the HHI has frequently been used to evaluate market concentration, such as in Johan and Vania (@JohanVania2022), who investigated the concentration level of the financial technology industry.
+
 Despite their extensive use in academic and policy research, these metrics are often computed using ad hoc scripts, combinations of statistical software, or partial code shared on platforms such as GitHub. This reflects a lack of standardized, accessible implementations in mainstream programming environments.
+
 The objective of this article is to address this gap by introducing an open-source framework in both Python and R that implements the four principal competition measures: HHI, Lerner Index, Boone Indicator, and Panzar–Rosse statistic, within a unified package. This dual implementation is designed to support researchers, practitioners, and students in conducting robust and reproducible analyses of market competition.
+
+This software is intended for economists, data scientists, regulators, and students who require a reproducible, transparent, and unified implementation of the four major market competition indicators. By consolidating these tools into a single open-source framework available in both Python and R, our contribution removes the dependence on fragmented scripts and facilitates consistent, replicable workflows for empirical research and policy analysis.
+
 
 # Related Work
 

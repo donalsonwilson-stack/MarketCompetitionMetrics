@@ -31,7 +31,7 @@ pip install market_competition_metrics
 ```
 From GitHub:
 ```bash
-devtools::install_github("donalsonwilson-stack/market_competition_metrics.py")
+pip install git+https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
 ```
 ### In R
 
@@ -42,7 +42,7 @@ install.packages("MarketCompetitionMetrics")
 
 From GitHub:
 ```bash
-devtools::install_github("donalsonwilson-stack/MarketCompetitionMetrics.R")
+devtools::install_github("donalsonwilson-stack/MarketCompetitionMetrics")
 ```
 ---
 ## 📘 Usage

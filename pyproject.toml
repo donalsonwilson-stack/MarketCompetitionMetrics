@@ -24,6 +24,9 @@ dependencies = [
 Homepage = "https://github.com/donalsonwilson-stack/MarketCompetitionMetrics"
 Repository = "https://github.com/donalsonwilson-stack/MarketCompetitionMetrics"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 where = ["."]
 

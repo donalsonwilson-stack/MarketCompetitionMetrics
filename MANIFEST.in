@@ -1,0 +1,23 @@
+# Include the dataset for examples
+include Synthetic_Market_Data.csv
+
+# Include README, paper, bibliography
+include README.md
+include paper.md
+include paper.bib
+
+# Include workflow image
+include workflow.png
+
+# Include Python example scripts
+recursive-include examples *
+
+# Include pytest tests
+recursive-include tests *
+
+# Include R package files
+recursive-include R *
+recursive-include tests/testthat *
+
+# Optional but recommended: include license
+include LICENSE

@@ -175,12 +175,14 @@ git clone https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
 cd MarketCompetitionMetrics
 ```
 2) Install the R package from the local source
+
 Open R or RStudio, then run:
 ```bash
 install.packages("devtools")   # if not already installed
 devtools::install_local(".")   # installs from the local repository
 ```
 3) Run the test suite (testthat)
+   
 The package includes testthat tests located in tests/testthat/.
 Execute all tests with:
 ```bash

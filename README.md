@@ -33,6 +33,9 @@ From GitHub:
 ```bash
 pip install git+https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
 ```
+Once the user installs the package from GitHub, it becomes available in all of their Python environments, such as Jupyter Notebook, VS Code, the terminal (Python REPL), Spyder, PyCharm, etc.
+They can then directly run the usage examples provided below.
+
 ### In R
 
 From CRAN *(coming soon)*:
@@ -44,6 +47,9 @@ From GitHub:
 ```bash
 devtools::install_github("donalsonwilson-stack/MarketCompetitionMetrics")
 ```
+Similarly, once the user installs the R package (either from GitHub or, later, from CRAN), it becomes available in their R environment, including RStudio, the R console, or any R script execution environment.
+They can then immediately run the usage examples provided below.
+
 ---
 ## 📘 Usage
 ### Python Example
@@ -128,6 +134,72 @@ results_boone <- boone(
 )
 print(results_boone)
 ```
+## General Local Testing Guide (Windows, macOS, Linux) for Reviewers
+### Python package
+Reviewers can test the Python implementation of MarketCompetitionMetrics by cloning the repository locally.
+The steps below are platform-independent and work on Windows, macOS, and Linux.
+
+1) Clone the repository
+```bash
+git clone https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
+cd MarketCompetitionMetrics
+```
+2) Create a dedicated virtual environment (Python 3.8+)
+```bash
+python -m venv .venv
+```
+3) Activate the environment
+```bash
+# Windows:
+.venv\Scripts\activate.bat
+# macOS/Linux:
+source .venv/bin/activate
+```
+4) Install the package in development mode
+```bash
+pip install -e .
+```
+5) Run the full test suite
+```bash
+pytest -q
+```
+This workflow ensures clean isolation of dependencies and allows reviewers to reproduce results reliably across different operating systems. 
+The included test suite validates all core competition indicators (HHI, Lerner, Boone, and Panzar–Rosse).
+
+### R package
+Reviewers can test the R implementation of MarketCompetitionMetrics by cloning the repository locally.
+The workflow below is platform-independent and works on Windows, macOS, and Linux.
+1) Clone the repository
+```bash
+git clone https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
+cd MarketCompetitionMetrics
+```
+2) Install the R package from the local source
+Open R or RStudio, then run:
+```bash
+install.packages("devtools")   # if not already installed
+devtools::install_local(".")   # installs from the local repository
+```
+3) Run the test suite (testthat)
+The package includes testthat tests located in tests/testthat/.
+Execute all tests with:
+```bash
+library(testthat)
+testthat::test_dir("tests/testthat")
+```
+4) Load and use the package
+```bash
+library(MarketCompetitionMetrics)
+
+# Example:
+data <- read.csv("inst/extdata/Synthetic_Market_Data.csv")
+results <- hhi(data, share_col = "Market_share", period_col = "Period")
+print(results)
+```
+This workflow ensures that reviewers can test the R version in a clean environment while reproducing results consistently across operating systems.
+The included test suite validates all four competition indicators (HHI, Lerner, Boone, and Panzar–Rosse).
+
+
 ## Features
 
 ✔️ Handles both cross-sectional and time-series datasets

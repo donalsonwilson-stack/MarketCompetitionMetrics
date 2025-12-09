@@ -1,4 +1,5 @@
 exportPattern("^[[:alpha:]]+")
-importFrom(dplyr, %>%)
+
+importFrom(magrittr, "%>%")
 importFrom(broom, tidy, glance)
 importFrom(ggplot2, ggplot)

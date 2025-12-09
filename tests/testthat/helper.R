@@ -1,27 +1,92 @@
+# tests/testthat/helper.R
 library(testthat)
 
-# Try to load dataset shipped with the package 
-data_file <- system.file("extdata", "Synthetic_Market_Data.csv", package = "MarketCompetitionMetrics")
+# ---------------------------
+# Helpers to locate + read CSV
+# ---------------------------
+get_test_csv_path <- function() {
+  # 1) prefer local inst/extdata (when running from source)
+  local_path <- file.path("inst", "extdata", "Synthetic_Market_Data.csv")
+  if (file.exists(local_path)) return(normalizePath(local_path))
 
-if (data_file != "" && file.exists(data_file)) {
-  test_data <- read.csv(data_file, stringsAsFactors = FALSE)
-  # Ensure numeric columns are numeric (robust to CSV)
-  num_cols <- c("Revenue","Profit","Labor_cost","Capital_cost","Wage_cost",
-                "Price","Marginal_cost","Market_share","Income")
-  for (nc in intersect(num_cols, names(test_data))) {
-    test_data[[nc]] <- as.numeric(test_data[[nc]])
-  }
+  # 2) if the package is installed, check system.file
+  pkg_path <- system.file("extdata", "Synthetic_Market_Data.csv", package = "MarketCompetitionMetrics")
+  if (nzchar(pkg_path) && file.exists(pkg_path)) return(normalizePath(pkg_path))
 
-  # build_df returns the dataset used by tests (from the CSV)
-  build_df <- function() {
-    # ensure Period and Firm are characters (not factors)
-    test_data$Period <- as.character(test_data$Period)
-    test_data$Firm   <- as.character(test_data$Firm)
-    return(test_data)
+  # not found
+  return(NULL)
+}
+
+safe_read_market_csv <- function(path) {
+  if (is.null(path)) stop("safe_read_market_csv: path is NULL")
+
+  # try to read first lines to detect separator
+  first_lines <- tryCatch(readLines(path, n = 5, warn = FALSE), error = function(e) character(0))
+  sep <- if (length(first_lines) > 0 && any(grepl(";", first_lines, fixed = TRUE))) ";" else ","
+
+  # attempt to read with safe options and handle BOM if present
+  df <- tryCatch(
+    {
+      # use read.table to allow fill = TRUE if some rows have fewer fields
+      read.table(path,
+                 header = TRUE,
+                 sep = sep,
+                 dec = ".",
+                 stringsAsFactors = FALSE,
+                 fill = TRUE,
+                 comment.char = "",
+                 quote = "\"'",
+                 fileEncoding = "UTF-8-BOM",
+                 na.strings = c("", "NA"))
+    },
+    error = function(e) {
+      stop("Failed to read CSV '", path, "': ", conditionMessage(e))
+    }
+  )
+
+  # make sure result is a data.frame
+  df <- as.data.frame(df, stringsAsFactors = FALSE)
+  # trim whitespace in column names and remove possible BOM in first name
+  names(df) <- trimws(sub("^\ufeff", "", names(df)))
+  return(df)
+}
+
+# ---------------------------
+# Build dataset for tests
+# ---------------------------
+csv_path <- get_test_csv_path()
+if (!is.null(csv_path)) {
+  test_data <- tryCatch(
+    {
+      d <- safe_read_market_csv(csv_path)
+      # ensure numeric columns are numeric (robust to CSV)
+      num_cols <- c("Revenue","Profit","Labor_cost","Capital_cost","Wage_cost",
+                    "Price","Marginal_cost","Market_share","Income")
+      for (nc in intersect(num_cols, names(d))) {
+        d[[nc]] <- suppressWarnings(as.numeric(d[[nc]]))
+      }
+      # ensure key character columns
+      if ("Period" %in% names(d)) d$Period <- as.character(d$Period)
+      if ("Firm" %in% names(d)) d$Firm <- as.character(d$Firm)
+      rownames(d) <- NULL
+      d
+    },
+    error = function(e) {
+      message("Could not read CSV at: ", csv_path, " — falling back to built-in constructor. (", conditionMessage(e), ")")
+      NULL
+    }
+  )
+
+  if (!is.null(test_data)) {
+    build_df <- function() {
+      return(test_data)
+    }
   }
-} else {
-  # Fallback: reconstruct dataset programmatically (if CSV missing)
-  warning("Synthetic_Market_Data.csv not found in package extdata — using built-in constructor fallback.")
+}
+
+# fallback constructor if CSV missing/unreadable
+if (!exists("build_df")) {
+  warning("Synthetic_Market_Data.csv not found or unreadable — using built-in constructor fallback.")
 
   build_df <- function() {
     data <- list(
@@ -69,7 +134,9 @@ if (data_file != "" && file.exists(data_file)) {
   }
 }
 
+# ---------------------------
 # Expected values (same numbers used in Python tests)
+# ---------------------------
 expected_hhi <- c(
   "2025-01-01" = 2106.899056,
   "2025-02-01" = 2124.636295,
@@ -94,64 +161,58 @@ expected_boone <- c(
   "2025-03-01" = -0.6410995
 )
 
+# ---------------------------
 # helper to extract numeric from various return types
+# ---------------------------
 extract_period_value <- function(result, period, key_candidates = c("HHI","hhi","Lerner","lerner","H","Boone","boone")) {
-  # numeric
+  # numeric scalar
   if (is.numeric(result) && length(result) == 1) return(as.numeric(result))
-  # list (named)
+
+  # list (possibly named by period)
   if (is.list(result)) {
-    # direct period
     if (!is.null(result[[period]])) {
       v <- result[[period]]
       if (is.numeric(v)) return(as.numeric(v))
       if (is.list(v)) {
         for (k in key_candidates) if (!is.null(v[[k]])) return(as.numeric(v[[k]]))
-        # find first numeric in v
         nums <- unlist(Filter(is.numeric, v))
         if (length(nums) > 0) return(as.numeric(nums[1]))
       }
     }
-    # named top-level keys
     for (k in key_candidates) {
       if (!is.null(result[[k]])) {
         cand <- result[[k]]
-        # cand could be numeric vector named by period
         if (is.numeric(cand) && !is.null(names(cand)) && period %in% names(cand)) {
           return(as.numeric(cand[period]))
         }
-        if (is.data.frame(cand)) {
-          if ("Period" %in% names(cand)) {
-            row <- cand[cand$Period == period, , drop = FALSE]
-            if (nrow(row) > 0) {
-              # try the key column
-              if (k %in% names(row)) return(as.numeric(row[[k]][1]))
-              # else return first numeric column
-              numcols <- sapply(row, is.numeric)
-              if (any(numcols)) return(as.numeric(row[[which(numcols)[1]]][1]))
-            }
+        if (is.data.frame(cand) && "Period" %in% names(cand)) {
+          row <- cand[cand$Period == period, , drop = FALSE]
+          if (nrow(row) > 0) {
+            if (k %in% names(row)) return(as.numeric(row[[k]][1]))
+            numcols <- sapply(row, is.numeric)
+            if (any(numcols)) return(as.numeric(row[[which(numcols)[1]]][1]))
           }
         }
       }
     }
   }
-  # data.frame
+
+  # data.frame case
   if (is.data.frame(result)) {
     if ("Period" %in% names(result)) {
       row <- result[result$Period == period, , drop = FALSE]
       if (nrow(row) > 0) {
-        # prefer known keys
         for (k in key_candidates) if (k %in% names(row)) return(as.numeric(row[[k]][1]))
-        # else first numeric column
         numcols <- sapply(row, is.numeric)
         if (any(numcols)) return(as.numeric(row[[which(numcols)[1]]][1]))
       }
     } else {
-      # if single-row DF with numeric
       if (nrow(result) == 1) {
         numcols <- sapply(result, is.numeric)
         if (any(numcols)) return(as.numeric(result[[which(numcols)[1]]][1]))
       }
     }
   }
+
   stop(sprintf("Could not extract numeric value for period %s", period))
 }

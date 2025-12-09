@@ -127,3 +127,61 @@ MarketCompetitionMetrics <- list(
     }
   }
 )
+
+# PUBLIC EXPORTS (wrappers)
+#' Compute the Herfindahl–Hirschman Index (HHI)
+#'
+#' @param data Data frame containing market data.
+#' @param share_col Column name of market shares.
+#' @param period_col Optional period column.
+#' @param plot Logical, whether to plot HHI evolution.
+#' @return A numeric or list of HHI values.
+#' @export
+hhi <- function(data, share_col, period_col = NULL, plot = FALSE) {
+  MarketCompetitionMetrics$hhi(data, share_col, period_col, plot)
+}
+
+#' Compute the Lerner Index
+#'
+#' @param data Data frame with market information.
+#' @param firm_col Firm identifier column.
+#' @param price_col Price column name.
+#' @param cost_col Marginal cost column name.
+#' @param share_col Market share column.
+#' @param period_col Optional period column.
+#' @param plot Logical, whether to show evolution plot.
+#' @param stacked Logical for stacked decomposition (unused).
+#' @return A list of Lerner metrics per firm/period.
+#' @export
+lerner <- function(data, firm_col, price_col, cost_col, share_col,
+                   period_col = NULL, plot = FALSE, stacked = FALSE) {
+  MarketCompetitionMetrics$lerner(
+    data, firm_col, price_col, cost_col, share_col, period_col, plot, stacked
+  )
+}
+
+#' Compute the Panzar–Rosse H-Statistic
+#'
+#' @param data Data frame with revenue and input cost variables.
+#' @param revenue_col Column name of revenues.
+#' @param input_cols Character vector of input costs.
+#' @param period_col Optional period column.
+#' @param plot Logical, whether to plot H evolution.
+#' @return A list of H-statistics and regression summaries.
+#' @export
+panzar_rosse <- function(data, revenue_col, input_cols, period_col = NULL, plot = FALSE) {
+  MarketCompetitionMetrics$panzar_rosse(data, revenue_col, input_cols, period_col, plot)
+}
+
+#' Compute the Boone Indicator
+#'
+#' @param data Data frame with profit and cost columns.
+#' @param cost_cols Vector of cost column names.
+#' @param profit_col Profit column name.
+#' @param period_col Optional period column.
+#' @param plot Logical, whether to show plot.
+#' @return A list containing Boone indicator and coefficient summary.
+#' @export
+boone <- function(data, cost_cols, profit_col, period_col = NULL, plot = FALSE) {
+  MarketCompetitionMetrics$boone(data, cost_cols, profit_col, period_col, plot)
+}

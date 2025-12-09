@@ -2,9 +2,11 @@ Package: MarketCompetitionMetrics
 Type: Package
 Title: Market Competition Metrics for R
 Version: 0.1.0
-Authors@R: person(given = "Donalson", family = "Wilson", role = c("aut", "cre"),
-    email = "donalson.wilson@etu.uae.ac.ma"),
-  person(given = "Abdellah", family = "Azmani", role = "aut")
+Authors@R: c(
+    person(given = "Donalson", family = "Wilson",
+           email = "donalson.wilson@etu.uae.ac.ma", role = c("aut", "cre")),
+    person(given = "Abdellah", family = "Azmani", role = "aut")
+)
 Description: Implements four competition measures (HHI, Lerner, Boone, Panzar-Rosse) with visualization utilities.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -17,3 +19,4 @@ Imports:
     readr
 URL: https://github.com/donalsonwilson-stack/MarketCompetitionMetrics
 BugReports: https://github.com/donalsonwilson-stack/MarketCompetitionMetrics/issues
+

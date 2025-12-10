@@ -2,7 +2,7 @@
 library(testthat)
 
 # ---------------------------
-# Fallback: construire les données en dur (utilisé pour les tests)
+# Build dataset for tests (hard-coded)
 # ---------------------------
 build_df <- function() {
   data <- list(
@@ -47,7 +47,6 @@ build_df <- function() {
   num_cols <- c("Revenue","Profit","Labor_cost","Capital_cost","Wage_cost",
                 "Price","Marginal_cost","Market_share","Income")
   df[num_cols] <- lapply(df[num_cols], as.numeric)
-  # ensure Period and Firm are character
   df$Period <- as.character(df$Period)
   df$Firm <- as.character(df$Firm)
   rownames(df) <- NULL
@@ -55,7 +54,7 @@ build_df <- function() {
 }
 
 # ---------------------------
-# Expected values (valeurs de référence utilisées par les tests)
+# Expected values (same numbers used in Python tests) - named numeric vectors
 # ---------------------------
 expected_hhi <- c(
   "2025-01-01" = 2106.899056,
@@ -82,64 +81,62 @@ expected_boone <- c(
 )
 
 # ---------------------------
-# Helper pour extraire une valeur numérique d'un résultat multi-forme
-# (listes nommées, data.frames, scalaires, etc.)
-# ---------------------------
 extract_period_value <- function(result, period, key_candidates = c("HHI","hhi","Lerner","lerner","H","Boone","boone")) {
-  as_num_unnamed <- function(x) {
+  as_num_scalar <- function(x) {
     if (is.null(x)) return(NA_real_)
     v <- suppressWarnings(as.numeric(unname(x)))
     if (length(v) == 0) return(NA_real_)
-    return(v[[1]])
+    # round to 6 decimals (matches expected precision)
+    return(round(v[[1]], 6))
   }
 
   # numeric scalar
-  if (is.numeric(result) && length(result) == 1) return(as_num_unnamed(result))
+  if (is.numeric(result) && length(result) == 1) return(as_num_scalar(result))
 
   # list (named) -> check direct period key first
   if (is.list(result)) {
     if (!is.null(result[[period]])) {
       v <- result[[period]]
-      if (is.numeric(v) && length(v) >= 1) return(as_num_unnamed(v))
+      if (is.numeric(v) && length(v) >= 1) return(as_num_scalar(v))
       if (is.list(v)) {
-        for (k in key_candidates) if (!is.null(v[[k]])) return(as_num_unnamed(v[[k]]))
+        for (k in key_candidates) if (!is.null(v[[k]])) return(as_num_scalar(v[[k]]))
         nums <- unlist(Filter(is.numeric, v))
-        if (length(nums) > 0) return(as_num_unnamed(nums[1]))
+        if (length(nums) > 0) return(as_num_scalar(nums[1]))
       }
     }
 
-    # named top-level keys (e.g., result$HHI or result$hhi)
+    # named top-level keys (e.g. result$H or result$HHI)
     for (k in key_candidates) {
       if (!is.null(result[[k]])) {
         cand <- result[[k]]
         if (is.numeric(cand) && !is.null(names(cand)) && period %in% names(cand)) {
-          return(as_num_unnamed(cand[period]))
+          return(as_num_scalar(cand[period]))
         }
         if (is.data.frame(cand) && "Period" %in% names(cand)) {
           row <- cand[cand$Period == period, , drop = FALSE]
           if (nrow(row) > 0) {
-            if (k %in% names(row)) return(as_num_unnamed(row[[k]][1]))
+            if (k %in% names(row)) return(as_num_scalar(row[[k]][1]))
             numcols <- sapply(row, is.numeric)
-            if (any(numcols)) return(as_num_unnamed(row[[which(numcols)[1]]][1]))
+            if (any(numcols)) return(as_num_scalar(row[[which(numcols)[1]]][1]))
           }
         }
       }
     }
   }
 
-  # data.frame result case
+  # data.frame
   if (is.data.frame(result)) {
     if ("Period" %in% names(result)) {
       row <- result[result$Period == period, , drop = FALSE]
       if (nrow(row) > 0) {
-        for (k in key_candidates) if (k %in% names(row)) return(as_num_unnamed(row[[k]][1]))
+        for (k in key_candidates) if (k %in% names(row)) return(as_num_scalar(row[[k]][1]))
         numcols <- sapply(row, is.numeric)
-        if (any(numcols)) return(as_num_unnamed(row[[which(numcols)[1]]][1]))
+        if (any(numcols)) return(as_num_scalar(row[[which(numcols)[1]]][1]))
       }
     } else {
       if (nrow(result) == 1) {
         numcols <- sapply(result, is.numeric)
-        if (any(numcols)) return(as_num_unnamed(result[[which(numcols)[1]]][1]))
+        if (any(numcols)) return(as_num_scalar(result[[which(numcols)[1]]][1]))
       }
     }
   }

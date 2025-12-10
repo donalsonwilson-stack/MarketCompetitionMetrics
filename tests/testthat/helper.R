@@ -47,7 +47,8 @@ safe_read_market_csv <- function(path) {
   # make sure result is a data.frame
   df <- as.data.frame(df, stringsAsFactors = FALSE)
   # trim whitespace in column names and remove possible BOM in first name
-  names(df) <- trimws(sub("^\ufeff", "", names(df)))
+  # Use unicode escape for safety
+  names(df) <- trimws(gsub("\uFEFF", "", names(df), fixed = FALSE))
   return(df)
 }
 
@@ -226,26 +227,6 @@ extract_period_value <- function(result, period, key_candidates = c("HHI","hhi",
       if (nrow(result) == 1) {
         numcols <- sapply(result, is.numeric)
         if (any(numcols)) return(as_num_unnamed(result[[which(numcols)[1]]][1]))
-      }
-    }
-  }
-
-  stop(sprintf("Could not extract numeric value for period %s", period))
-}
-
-  # data.frame case
-  if (is.data.frame(result)) {
-    if ("Period" %in% names(result)) {
-      row <- result[result$Period == period, , drop = FALSE]
-      if (nrow(row) > 0) {
-        for (k in key_candidates) if (k %in% names(row)) return(as.numeric(row[[k]][1]))
-        numcols <- sapply(row, is.numeric)
-        if (any(numcols)) return(as.numeric(row[[which(numcols)[1]]][1]))
-      }
-    } else {
-      if (nrow(result) == 1) {
-        numcols <- sapply(result, is.numeric)
-        if (any(numcols)) return(as.numeric(result[[which(numcols)[1]]][1]))
       }
     }
   }

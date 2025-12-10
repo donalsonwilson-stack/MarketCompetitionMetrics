@@ -47,7 +47,6 @@ safe_read_market_csv <- function(path) {
   # make sure result is a data.frame
   df <- as.data.frame(df, stringsAsFactors = FALSE)
   # trim whitespace in column names and remove possible BOM in first name
-  # Use unicode escape for safety
   names(df) <- trimws(gsub("\uFEFF", "", names(df), fixed = FALSE))
   return(df)
 }
@@ -166,8 +165,11 @@ expected_boone <- c(
 extract_period_value <- function(result, period, key_candidates = c("HHI","hhi","Lerner","lerner","H","Boone","boone")) {
   # helper to coerce and drop names
   as_num_unnamed <- function(x) {
-    if (is.null(x)) return(NULL)
-    return(as.numeric(unname(x)))
+    if (is.null(x)) return(NA_real_)
+    # coerce to numeric, drop names, ensure scalar numeric result
+    v <- suppressWarnings(as.numeric(unname(x)))
+    if (length(v) == 0) return(NA_real_)
+    return(v[[1]])
   }
 
   # numeric scalar
@@ -178,7 +180,7 @@ extract_period_value <- function(result, period, key_candidates = c("HHI","hhi",
     # direct period entry (result[["2025-01-01"]] etc.)
     if (!is.null(result[[period]])) {
       v <- result[[period]]
-      if (is.numeric(v)) return(as_num_unnamed(v))
+      if (is.numeric(v) && length(v) >= 1) return(as_num_unnamed(v))
       if (is.list(v)) {
         for (k in key_candidates) if (!is.null(v[[k]])) return(as_num_unnamed(v[[k]]))
         # find first numeric in v

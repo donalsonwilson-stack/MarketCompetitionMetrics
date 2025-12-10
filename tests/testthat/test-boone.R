@@ -16,3 +16,4 @@ test_that("Boone indicator matches expected per period", {
     expect_equal(as.numeric(val), as.numeric(expected_boone[p]), tolerance = 1e-6)
   }
 })
+

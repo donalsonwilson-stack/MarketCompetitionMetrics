@@ -161,41 +161,77 @@ expected_boone <- c(
   "2025-03-01" = -0.6410995
 )
 
-# ---------------------------
 # helper to extract numeric from various return types
-# ---------------------------
 extract_period_value <- function(result, period, key_candidates = c("HHI","hhi","Lerner","lerner","H","Boone","boone")) {
-  # numeric scalar
-  if (is.numeric(result) && length(result) == 1) return(as.numeric(result))
+  # helper to coerce and drop names
+  as_num_unnamed <- function(x) {
+    if (is.null(x)) return(NULL)
+    return(as.numeric(unname(x)))
+  }
 
-  # list (possibly named by period)
+  # numeric scalar
+  if (is.numeric(result) && length(result) == 1) return(as_num_unnamed(result))
+
+  # list (named)
   if (is.list(result)) {
+    # direct period entry (result[["2025-01-01"]] etc.)
     if (!is.null(result[[period]])) {
       v <- result[[period]]
-      if (is.numeric(v)) return(as.numeric(v))
+      if (is.numeric(v)) return(as_num_unnamed(v))
       if (is.list(v)) {
-        for (k in key_candidates) if (!is.null(v[[k]])) return(as.numeric(v[[k]]))
+        for (k in key_candidates) if (!is.null(v[[k]])) return(as_num_unnamed(v[[k]]))
+        # find first numeric in v
         nums <- unlist(Filter(is.numeric, v))
-        if (length(nums) > 0) return(as.numeric(nums[1]))
+        if (length(nums) > 0) return(as_num_unnamed(nums[1]))
       }
     }
+
+    # named top-level keys
     for (k in key_candidates) {
       if (!is.null(result[[k]])) {
         cand <- result[[k]]
+        # cand could be numeric vector named by period
         if (is.numeric(cand) && !is.null(names(cand)) && period %in% names(cand)) {
-          return(as.numeric(cand[period]))
+          return(as_num_unnamed(cand[period]))
         }
-        if (is.data.frame(cand) && "Period" %in% names(cand)) {
-          row <- cand[cand$Period == period, , drop = FALSE]
-          if (nrow(row) > 0) {
-            if (k %in% names(row)) return(as.numeric(row[[k]][1]))
-            numcols <- sapply(row, is.numeric)
-            if (any(numcols)) return(as.numeric(row[[which(numcols)[1]]][1]))
+        if (is.data.frame(cand)) {
+          if ("Period" %in% names(cand)) {
+            row <- cand[cand$Period == period, , drop = FALSE]
+            if (nrow(row) > 0) {
+              # try the key column
+              if (k %in% names(row)) return(as_num_unnamed(row[[k]][1]))
+              # else return first numeric column
+              numcols <- sapply(row, is.numeric)
+              if (any(numcols)) return(as_num_unnamed(row[[which(numcols)[1]]][1]))
+            }
           }
         }
       }
     }
   }
+
+  # data.frame
+  if (is.data.frame(result)) {
+    if ("Period" %in% names(result)) {
+      row <- result[result$Period == period, , drop = FALSE]
+      if (nrow(row) > 0) {
+        # prefer known keys
+        for (k in key_candidates) if (k %in% names(row)) return(as_num_unnamed(row[[k]][1]))
+        # else first numeric column
+        numcols <- sapply(row, is.numeric)
+        if (any(numcols)) return(as_num_unnamed(row[[which(numcols)[1]]][1]))
+      }
+    } else {
+      # if single-row DF with numeric
+      if (nrow(result) == 1) {
+        numcols <- sapply(result, is.numeric)
+        if (any(numcols)) return(as_num_unnamed(result[[which(numcols)[1]]][1]))
+      }
+    }
+  }
+
+  stop(sprintf("Could not extract numeric value for period %s", period))
+}
 
   # data.frame case
   if (is.data.frame(result)) {

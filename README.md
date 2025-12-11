@@ -200,9 +200,13 @@ You should observe: [ FAIL 0 | WARN 0 | SKIP 0 | PASS 24 ]
 library(MarketCompetitionMetrics)
 
 # Example:
+
 data <- read.csv("inst/extdata/Synthetic_Market_Data.csv")
-results <- hhi(data, share_col = "Market_share", period_col = "Period")
-print(results)
+# Compute HHI per period
+results_hhi = MarketCompetitionMetrics.hhi(
+    data, share_col="Market_share", period_col="Period", plot=True
+)
+print(results_hhi)
 ```
 This workflow ensures that reviewers can test the R version in a clean environment while reproducing results consistently across operating systems.
 The included test suite validates all four competition indicators (HHI, Lerner, Boone, and Panzar–Rosse).

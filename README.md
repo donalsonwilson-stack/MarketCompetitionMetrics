@@ -180,7 +180,8 @@ Open RStudio
 Go to File → Open Project…
 Select the folder MarketCompetitionMetrics/
 (This ensures that RStudio uses the correct working directory and project environment.)
-4) Install development tools (first time only)
+
+3) Install development tools (first time only)
 ```bash
 install.packages("remotes")
 install.packages("pkgload")
@@ -190,6 +191,7 @@ install.packages("testthat")
 ```bash
 pkgload::load_all()   # loads the package in development mode
 ```
+
 5) Run the full test suite
 ```bash
 testthat::test_dir("tests/testthat")

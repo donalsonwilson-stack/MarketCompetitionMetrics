@@ -167,29 +167,35 @@ This workflow ensures clean isolation of dependencies and allows reviewers to re
 The included test suite validates all core competition indicators (HHI, Lerner, Boone, and Panzar–Rosse).
 
 ### R package
-Reviewers can test the R implementation of MarketCompetitionMetrics by cloning the repository locally.
-The workflow below is platform-independent and works on Windows, macOS, and Linux.
+Reviewers can test the R implementation of MarketCompetitionMetrics by cloning the repository and running the standard development workflow.
+The procedure below works on Windows, macOS, and Linux.
 1) Clone the repository
 ```bash
 git clone https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
 cd MarketCompetitionMetrics
 ```
-2) Install the R package from the local source
-
-Open R or RStudio, then run:
+2) Open the project in RStudio
+Open RStudio
+Go to File → Open Project…
+Select the folder MarketCompetitionMetrics/
+(This ensures that RStudio uses the correct working directory and project environment.)
+3) Install development tools (first time only)
 ```bash
-install.packages("devtools")   # if not already installed
-devtools::install_local(".")   # installs from the local repository
+install.packages("remotes")
+install.packages("pkgload")
+install.packages("testthat")
 ```
-3) Run the test suite (testthat)
-   
-The package includes testthat tests located in tests/testthat/.
-Execute all tests with:
+4) Load the package from source
 ```bash
-library(testthat)
+pkgload::load_all()   # loads the package in development mode
+```
+5) Run the full test suite
+```bash
 testthat::test_dir("tests/testthat")
 ```
-4) Load and use the package
+You should observe: [ FAIL 0 | WARN 0 | SKIP 0 | PASS 24 ]
+
+6) Load and use the package
 ```bash
 library(MarketCompetitionMetrics)
 

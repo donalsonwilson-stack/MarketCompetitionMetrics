@@ -175,11 +175,12 @@ git clone https://github.com/donalsonwilson-stack/MarketCompetitionMetrics.git
 cd MarketCompetitionMetrics
 ```
 2) Open the project in RStudio
+   
 Open RStudio
 Go to File → Open Project…
 Select the folder MarketCompetitionMetrics/
 (This ensures that RStudio uses the correct working directory and project environment.)
-3) Install development tools (first time only)
+4) Install development tools (first time only)
 ```bash
 install.packages("remotes")
 install.packages("pkgload")

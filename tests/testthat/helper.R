@@ -137,31 +137,30 @@ if (!exists("build_df")) {
 # ---------------------------
 # Expected values (same numbers used in Python tests)
 # rounded at 1e-6 for stable comparisons/visual checks
-# NOTE: keep numeric values unchanged; remove names (unname) to avoid attribute mismatches
 # ---------------------------
-expected_hhi <- unname(round(c(
+expected_hhi <- round(c(
   "2025-01-01" = 2106.899056,
   "2025-02-01" = 2124.636295,
   "2025-03-01" = 2012.559149
-), 6))
+), 6)
 
-expected_lerner <- unname(round(c(
+expected_lerner <- round(c(
   "2025-01-01" = 34.968959,
   "2025-02-01" = 34.977133,
   "2025-03-01" = 32.420292
-), 6))
+), 6)
 
-expected_panzar <- unname(round(c(
+expected_panzar <- round(c(
   "2025-01-01" = -0.652101,
   "2025-02-01" = 0.878260,
   "2025-03-01" = 0.241636
-), 6))
+), 6)
 
-expected_boone <- unname(round(c(
+expected_boone <- round(c(
   "2025-01-01" = 1.039272,
   "2025-02-01" = 3.44834,
   "2025-03-01" = -0.6410995
-), 6))
+), 6)
 
 # helper to extract numeric from various return types and round to 1e-6
 extract_period_value <- function(result, period, key_candidates = c("HHI","hhi","Lerner","lerner","H","Boone","boone")) {

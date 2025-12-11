@@ -1,4 +1,3 @@
-# tests/testthat/helper.R
 library(testthat)
 
 # ---------------------------

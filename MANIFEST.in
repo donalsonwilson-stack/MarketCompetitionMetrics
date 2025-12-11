@@ -19,5 +19,5 @@ recursive-include tests *
 recursive-include R *
 recursive-include tests/testthat *
 
-# Optional but recommended: include license
+# Include license
 include LICENSE

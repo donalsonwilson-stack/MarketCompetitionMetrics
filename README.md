@@ -197,15 +197,13 @@ You should observe: [ FAIL 0 | WARN 0 | SKIP 0 | PASS 24 ]
 
 6) Load and use the package
 ```bash
+# Example:
 library(MarketCompetitionMetrics)
+data <- read.csv("inst/extdata/Synthetic_Market_Data.csv")
 
 # Example:
-
-data <- read.csv("inst/extdata/Synthetic_Market_Data.csv")
 # Compute HHI per period
-results_hhi = MarketCompetitionMetrics.hhi(
-    data, share_col="Market_share", period_col="Period", plot=True
-)
+results_hhi <- hhi(data, share_col="Market_share", period_col="Period", plot=TRUE)
 print(results_hhi)
 ```
 This workflow ensures that reviewers can test the R version in a clean environment while reproducing results consistently across operating systems.

@@ -20,7 +20,7 @@ The Competitive analysis is a crucial component for firms operating in dynamic m
 In this paper, we propose a dual open-source package for both Python and R environments that implements four of the most widely used competition measures in the literature: the Herfindahl–Hirschman Index (HHI), the Lerner Index, 
 the Boone Indicator, and the Panzar–Rosse statistic. These packages provide researchers, practitioners, and students with a ready-to-use framework for conducting competition analysis. They are designed to handle both cross-sectional 
 and time-series datasets and are adaptable to various sectors, including insurance, banking, and other competitive industries. The packages that we have introduced in this study are already available as open-source on GitHub (https://github.com/donalsonwilson-stack/MarketCompetitionMetrics) , 
-and will also be released on CRAN (as MarketCompetitionMetrics.R), and PyPI (as market_competition_metrics). To the best of our knowledge, this work represents the first open-source effort to implement and unify these four competition metrics within both R and Python ecosystems.
+and will also be released on CRAN (as MarketCompetitionMetrics), and PyPI (as market_competition_metrics). To the best of our knowledge, this work represents the first open-source effort to implement and unify these four competition metrics within both R and Python ecosystems.
 
 # Statement of need
 

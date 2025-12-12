@@ -177,7 +177,9 @@ cd MarketCompetitionMetrics
 2) Open the project in RStudio
    
 Open RStudio
+
 Go to File → Open Project…
+
 Select the folder MarketCompetitionMetrics/
 (This ensures that RStudio uses the correct working directory and project environment.)
 

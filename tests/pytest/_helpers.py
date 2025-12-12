@@ -87,7 +87,7 @@ def _extract_period_value(result, period, key_candidates):
                     for vv in v.values():
                         if isinstance(vv, (int, float, np.floating)):
                             return float(vv)
-        # maybe top-level mapping metric -> pd.Series/dict
+        # top-level mapping metric -> pd.Series/dict
         for kc in key_candidates:
             if kc in result:
                 cand = result[kc]

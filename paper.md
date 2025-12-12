@@ -96,9 +96,9 @@ The design of the packages supports both cross-sectional and time-series dataset
 ![Workflow of the Python and R packages](workflow.png)
 **Fig. 1. Workflow of the Python and R packages.**
 
-In addition to this unified workflow, the Python implementation relies on a set of widely used scientific libraries to ensure numerical stability and statistical rigor. NumPy is used for vectorized computations, pandas for data manipulation and grouping operations, matplotlib for producing time-series visualizations, and statsmodels for estimating the Boone and Panzar–Rosse regressions, including their associated econometric diagnostics.
+In addition to this unified workflow, the Python implementation relies on a set of widely used scientific libraries to ensure numerical stability and statistical rigor. NumPy (@HarrisEtAl2020)is used for vectorized computations, pandas (@Pandas2025) for data manipulation and grouping operations, matplotlib (@Matplotlib2025) for producing time-series visualizations, and statsmodels (@SeaboldPerktold2010) for estimating the Boone and Panzar–Rosse regressions, including their associated econometric diagnostics.
 
-Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr package enables streamlined data manipulation and grouping operations, ggplot2 provides graphical visualization of the indices over time, and broom is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
+Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr (@WickhamEtAl2014) package enables streamlined data manipulation and grouping operations, ggplot2 (@WickhamEtAl2007) provides graphical visualization of the indices over time, and broom (@RobinsonHayesCouch2014) is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
 
 # Example Usage
 

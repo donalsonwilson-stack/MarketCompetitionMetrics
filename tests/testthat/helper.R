@@ -1,6 +1,5 @@
 library(testthat)
 
-# ---------------------------
 # Helpers to locate + read CSV
 # ---------------------------
 get_test_csv_path <- function() {
@@ -43,15 +42,15 @@ safe_read_market_csv <- function(path) {
     }
   )
 
-  # make sure result is a data.frame
+  # we make sure result is a data.frame
   df <- as.data.frame(df, stringsAsFactors = FALSE)
   # trim whitespace in column names and remove possible BOM in first name
-  # use unicode escape for safety
+  # we use unicode escape for safety
   names(df) <- trimws(gsub("\uFEFF", "", names(df), fixed = FALSE))
   return(df)
 }
 
-# ---------------------------
+
 # Build dataset for tests
 # ---------------------------
 csv_path <- get_test_csv_path()
@@ -59,7 +58,7 @@ if (!is.null(csv_path)) {
   test_data <- tryCatch(
     {
       d <- safe_read_market_csv(csv_path)
-      # ensure numeric columns are numeric (robust to CSV)
+      # we ensure numeric columns are numeric (robust to CSV)
       num_cols <- c("Revenue", "Profit", "Labor_cost", "Capital_cost", "Wage_cost",
                     "Price", "Marginal_cost", "Market_share", "Income")
       for (nc in intersect(num_cols, names(d))) {
@@ -135,7 +134,7 @@ if (!exists("build_df")) {
 }
 
 # ---------------------------
-# Expected values (same numbers used in Python tests)
+# Expected values (same numbers used in Python tests exept for the boone and panzar-rosse indexes (they are approximately egual) due to difference regression engine in R and python)
 # rounded at 1e-6 for stable comparisons/visual checks
 # ---------------------------
 expected_hhi <- round(c(

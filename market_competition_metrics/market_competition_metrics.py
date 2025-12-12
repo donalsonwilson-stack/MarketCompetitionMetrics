@@ -72,7 +72,7 @@ class MarketCompetitionMetrics:
             firm_col (str): column with firm names
             price_col (str): column with prices
             cost_col (str): column with marginal costs
-            share_col (str): column with market shares (already computed)
+            share_col (str): column with market shares
             period_col (str): optional column for periods (month, year...)
             plot (bool): if True, plot market Lerner index over time
             stacked (bool): if True, plot stacked bar chart of firm contributions

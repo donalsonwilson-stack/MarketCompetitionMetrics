@@ -4,8 +4,7 @@ library(broom)
 
 MarketCompetitionMetrics <- list(
 
-  # ------------------------------------------------------------
-  # HHI
+  # Herfindahl–Hirschman Index (HHI)
   # ------------------------------------------------------------
   hhi = function(data, share_col, period_col = NULL, plot = FALSE) {
     if (!is.null(period_col)) {
@@ -27,8 +26,8 @@ MarketCompetitionMetrics <- list(
     }
   },
 
-  # ------------------------------------------------------------
-  # Lerner
+  
+  # Lerner Index
   # ------------------------------------------------------------
   lerner = function(data, firm_col, price_col, cost_col, share_col, 
                     period_col = NULL, plot = FALSE, stacked = FALSE) {
@@ -60,8 +59,8 @@ MarketCompetitionMetrics <- list(
     }
   },
 
-  # ------------------------------------------------------------
-  # Panzar-Rosse
+  
+  # Panzar-Rosse indicator
   # ------------------------------------------------------------
   panzar_rosse = function(data, revenue_col, input_cols, period_col = NULL, plot = FALSE) {
     compute_pr <- function(df) {
@@ -92,8 +91,8 @@ MarketCompetitionMetrics <- list(
     }
   },
 
-  # ------------------------------------------------------------
-  # Boone
+  
+  # Boone indicator
   # ------------------------------------------------------------
   boone = function(data, cost_cols, profit_col, period_col = NULL, plot = FALSE) {
     compute_boone <- function(df) {

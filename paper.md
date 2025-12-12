@@ -55,7 +55,7 @@ Its value ranges between 0 (highly competitive market) and 10 000 (monopoly).
 
 ## Lerner Index
 
-Developed by economist Abba P. Lerner in 1934 (@Lerner1934), the Lerner Index is used to quantify the market power of a firm i. This index measures a firm’s ability to set prices above marginal costs, thereby indicating the degree of market power it holds. The higher the index, the greater the firm’s dominance in the market. For a given firm i, the Lerner Index at time t is defined as:
+Developed by economist Abba P. Lerner in 1934 (@Lerner1934), the Lerner Index is used to quantify the market power of a firm i. This index measures a firm’s ability to set prices above marginal costs, thereby indicating the degree of market power it holds. The higher the index, the greater the firm’s dominance in the market. For a given firm *i*, the Lerner Index at time *t* is defined as:
 
 $$L_{i,t} = \frac{P_{i,t} - MC_{i,t}}{P_{i,t}}$$
 
@@ -63,7 +63,7 @@ The market-wide index is computed as a market-share–weighted average.
 
 ## Panzar–Rosse H-statistic
 
-The Panzar–Rosse model, introduced in 1977 (@PanzarRosse1987; @RossePanzar1977), is widely known through the H-statistic, which captures the static dimension of competition. The core idea is that firms adjust their pricing strategies in response to changes in input prices, depending on the behavior of their competitors. The H-statistic measures the degree of competition by quantifying how revenues react to variations in input prices. Formally, for firm i in period t, the model is estimated using the following log–log specification:
+The Panzar–Rosse model, introduced in 1977 (@PanzarRosse1987; @RossePanzar1977), is widely known through the H-statistic, which captures the static dimension of competition. The core idea is that firms adjust their pricing strategies in response to changes in input prices, depending on the behavior of their competitors. The H-statistic measures the degree of competition by quantifying how revenues react to variations in input prices. Formally, for firm *i* in period *t*, the model is estimated using the following log–log specification:
 
 
 $$\ln R_{i,t} = \alpha + \sum_k \alpha_{k,t} \ln C_{k,i,t}$$
@@ -105,8 +105,8 @@ Similarly, the R implementation depends on well-established packages from the ti
 To illustrate the workflow, consider a dataset of firms observed over several periods.
 Both the Python and R versions of MarketCompetitionMetrics provide concise functions to compute key market competition indicators, including the Herfindahl–Hirschman Index (HHI), the Lerner Index, the Boone indicator, and the Panzar–Rosse H-statistic.
 
-For instance, given firm-level prices, marginal costs, and market shares, the lerner() function returns the market power index for each period together with firm-level contributions.
-Similarly, the hhi() function summarises market concentration based on market shares.
+For instance, given firm-level prices, marginal costs, and market shares, the *lerner()* function returns the market power index for each period together with firm-level contributions.
+Similarly, the *hhi()* function summarises market concentration based on market shares.
 
 These metrics can be computed either for a single cross-section or for a panel dataset, and each function includes an optional plotting mode that visualises the temporal evolution of competition.
 

@@ -24,8 +24,6 @@ and will also be released on CRAN (as MarketCompetitionMetrics.R), and PyPI (as 
 
 # Statement of need
 
-# Statement of need
-
 In today’s digitalized economy, firms must continuously analyze the markets in which they operate in order to adapt strategies and make informed decisions. The regulators of the markets also require reliable tools to assess market structure and ensure proper regulation. Market competition can vary significantly, ranging from monopolistic and duopolistic settings to highly competitive environments.
 
 Several economic indicators have been developed to measure the degree of competition within a market. Among the most widely used are the Herfindahl–Hirschman Index (HHI), introduced by Herfindahl and Hirschman (1945-1950) (@Herfindahl1950; @Hirschman2018), the Lerner index (@Lerner1934), the Boone indicator (@Boone2008; @BooneVanOursWiel2007) and the Panzar–Rosse H-statistic (@PanzarRosse1987; @RossePanzar1977). These metrics have been applied across different industries to evaluate competitive intensity. For instance, Abel and Marire (@AbelMarire2021) employed the Boone Indicator to measure competitiveness in Zimbabwe’s insurance sector between 2010 and 2017; Mpho and Witness (@MphoWitness2020) used both Boone and Panzar–Rosse indices to assess competition in South Africa’s banking industry; and Benazzi et al. (@BenazziRouiesi2017) analyzed the Moroccan banking sector using the Boone Indicator. Similarly, the HHI has frequently been used to evaluate market concentration, such as in Johan and Vania (@JohanVania2022), who investigated the concentration level of the financial technology industry.
@@ -40,6 +38,7 @@ This software is intended for economists, data scientists, regulators, and stude
 # Related Work
 
 The Herfindahl–Hirschman Index (HHI) is one of the few competition measures sometimes available in standard econometric software, for instance through the hhi command in Stata or the IC2 package in R. An additional contribution in this space is the work of Philip D. Waggoner, who developed an R package computing the HHI index with integrated visualization via ggplot (@Waggoner2018). By contrast, other widely used indicators of competition are not natively supported in mainstream tools.
+
 The Lerner Index is typically computed manually from price and marginal cost estimations, often relying on custom regressions in Stata, R, or Python. The Boone Indicator is even less standardized, most often estimated through ad hoc log-log OLS regressions, with implementation scattered across isolated R scripts or Stata modules. Similarly, the Panzar–Rosse H-statistic, though extensively applied in banking competition studies (e.g., (@AbelLeRoux2017; @BenazziRouiesi2017; @Molyneux1994; @ShafferSpierdijk2015)), is usually calculated using researcher-specific scripts rather than through an official package.
 As a result, HHI is the only measure readily accessible in mainstream software, while the Lerner, Boone, and Panzar–Rosse indicators remain fragmented across custom, non-standard implementations. The contribution of this work is therefore to provide the first unified open-source Python and R packages that centralize all four indicators, delivering a consistent, ready-to-use framework for researchers and practitioners conducting market competition analysis.
 
@@ -74,9 +73,9 @@ The H-statistic is defined as:
 $$H_t = \sum_k \alpha_{k,t}$$
 
 Its interpretation follows established competition theory:  
-- \(H = 1\): perfect competition  
-- \(0 < H < 1\): monopolistic competition  
-- \(H < 0\): monopoly or collusive behavior
+- $$\(H = 1\)$$: perfect competition  
+- $$\(0 < H < 1\)$$: monopolistic competition  
+- $$\(H < 0\)$$: monopoly or collusive behavior
 
 ## Boone Indicator
 
@@ -101,92 +100,16 @@ In addition to this unified workflow, the Python implementation relies on a set 
 
 Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr package enables streamlined data manipulation and grouping operations, ggplot2 provides graphical visualization of the indices over time, and broom is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
 
-# Example
+# Example Usage
 
-Below we provide a minimal usage example in both Python and R to illustrate how the proposed framework can be used to compute competition indicators with the provided dataset.
+To illustrate the workflow, consider a dataset of firms observed over several periods.
+Both the Python and R versions of MarketCompetitionMetrics provide concise functions to compute key market competition indicators, including the Herfindahl–Hirschman Index (HHI), the Lerner Index, the Boone indicator, and the Panzar–Rosse H-statistic.
 
-## Python example
+For instance, given firm-level prices, marginal costs, and market shares, the lerner() function returns the market power index for each period together with firm-level contributions.
+Similarly, the hhi() function summarises market concentration based on market shares.
 
-```python
-import pandas as pd
-from market_competition_metrics import MarketCompetitionMetrics
+These metrics can be computed either for a single cross-section or for a panel dataset, and each function includes an optional plotting mode that visualises the temporal evolution of competition.
 
-# Load dataset
-df = pd.read_csv("Synthetic_Market_Data.csv")
-
-# Compute HHI per period
-hhi_results = MarketCompetitionMetrics.hhi(
-    df, share_col="Market_share", period_col="Period", plot=True
-)
-
-# Compute Lerner Index
-lerner_results = MarketCompetitionMetrics.lerner(
-    df,
-    firm_col="Firm",
-    price_col="Price",
-    cost_col="Marginal_cost",
-    share_col="Market_share",
-    period_col="Period",
-    plot=True
-)
-
-# Compute Panzar–Rosse H-statistic
-pr_results = MarketCompetitionMetrics.panzar_rosse(
-    df,
-    revenue_col="Revenue",
-    input_cols=["Labor_cost", "Capital_cost"],
-    period_col="Period",
-    plot=True
-)
-
-# Compute Boone Indicator
-boone_results = MarketCompetitionMetrics.boone(
-    df,
-    cost_cols=["Labor_cost", "Capital_cost", "Wage_cost"],
-    profit_col="Profit",
-    period_col="Period",
-    plot=True
-)
-
-## R example
-library(MarketCompetitionMetrics)
-
-# Load dataset
-data <- read.csv("Synthetic_Market_Data.csv")
-
-# Compute HHI per period
-results_hhi <- hhi(data, share_col="Market_share", period_col="Period", plot=TRUE)
-
-# Compute Lerner Index
-results_lerner <- lerner(
-  data,
-  firm_col="Firm",
-  price_col="Price",
-  cost_col="Marginal_cost",
-  share_col="Market_share",
-  period_col="Period",
-  plot=TRUE
-)
-
-# Compute Panzar–Rosse H-statistic
-results_pr <- panzar_rosse(
-  data,
-  revenue_col = "Revenue",
-  input_cols = c("Labor_cost", "Capital_cost"),
-  period_col = "Period",
-  plot = TRUE
-)
-
-# Compute Boone Indicator
-results_boone <- boone(
-  data,
-  cost_cols = c("Labor_cost", "Capital_cost", "Wage_cost"),
-  profit_col = "Profit",
-  period_col = "Period",
-  plot = TRUE
-)
-
-```
 # Acknowledgments
 
 This work was supported by the Moroccan Ministry of Higher Education, Scientific Research and Innovation, the Digital Development Agency (DDA), and the CNRST under the Smart DLSP Project – AL KHAWARIZMI Program.

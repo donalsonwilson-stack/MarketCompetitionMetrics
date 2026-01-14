@@ -100,6 +100,12 @@ In addition to this unified workflow, the Python implementation relies on a set 
 
 Similarly, the R implementation depends on well-established packages from the tidyverse ecosystem. The dplyr (@WickhamEtAl2014) package enables streamlined data manipulation and grouping operations, ggplot2 (@WickhamEtAl2007) provides graphical visualization of the indices over time, and broom (@RobinsonHayesCouch2014) is used to extract tidy regression outputs for the Boone and Panzar–Rosse models. Together, these dependencies ensure that the R version delivers the same analytical consistency, interpretability, and reproducibility as its Python counterpart.
 
+# Software Design
+
+The MarketCompetitionMetrics framework is designed with a modular architecture that mirrors the theoretical structure of market competition analysis. Each competition indicator (HHI, Lerner, Boone, and Panzar–Rosse) is implemented as an independent function, allowing users to compute metrics either on cross-sectional data or panel datasets.
+
+The Python and R implementations follow consistent design principles, ensuring comparable outputs across ecosystems. Data grouping by period is handled internally, and optional visualization layers are integrated without affecting numerical results. This modular design facilitates extensibility and supports reproducible empirical research.
+
 # Example Usage
 
 To illustrate the workflow, consider a dataset of firms observed over several periods.
@@ -110,6 +116,12 @@ Similarly, the *hhi()* function summarises market concentration based on market 
 
 These metrics can be computed either for a single cross-section or for a panel dataset, and each function includes an optional plotting mode that visualises the temporal evolution of competition.
 
+# Research Impact Statement
+
+MarketCompetitionMetrics lowers the barrier to conducting rigorous competition analysis by providing a unified, open-source implementation of four widely used market competition indicators. By supporting both Python and R ecosystems, the software enables reproducible research across disciplines including economics, finance, banking, and insurance studies.
+
+The framework is intended to benefit researchers, students, and regulators by replacing fragmented, ad hoc scripts with a standardized and transparent workflow, thereby improving comparability and reproducibility in empirical competition research.
+
 # Acknowledgments
 
 This work was supported by the Moroccan Ministry of Higher Education, Scientific Research and Innovation, the Digital Development Agency (DDA), and the CNRST under the Smart DLSP Project – AL KHAWARIZMI Program.
@@ -117,6 +129,11 @@ This work was supported by the Moroccan Ministry of Higher Education, Scientific
 # Conflicts of interest
 
 The authors declare that there are no conflicts of interest associated with this manuscript.
+
+# AI Usage Disclosure
+
+No generative artificial intelligence tools were used in the development of the software or in the writing of this manuscript.
+
 
 
 

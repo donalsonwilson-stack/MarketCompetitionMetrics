@@ -248,4 +248,4 @@ This project is licensed under the MIT License – free to use, modify, and dist
 
 If you use this package, please cite:
 
-Wilson, D. & Azmani, A. (2025). MarketCompetitionMetrics: An Open-Source Python and R Framework for Measuring Market Competition: Implementation of Boone, Panzar-Rosse, Lerner, and Herfindahl-Hirschman Indices.
+Wilson, D. & Azmani, A. (2025). MarketCompetitionMetrics: An Open-Source Python and R Framework for Measuring Market Competition: Implementation of Boone, Panzar-Rosse, Lerner, and Herfindahl-Hirschman Indices. DOI: 10.5281/zenodo.18263666.
